@@ -58,7 +58,7 @@ const ProgramsTable = () => {
             <tbody>
               {programs.map((program, index) => (
                 <tr key={index} >
-                  <td className="flex items-center gap-4 ml-4 py-3 px-4 text-[#3C4852] w-[80%]">
+                  <td className="flex items-center gap-4 ml-4 py-3 px-4 text-[#3C4852] w-[80%] 2xl:text-[24px]/[28px] 3xl:w-[50%]">
                     <img src={hat} alt='hat icon' />
                     <span>{program.name}</span>
                   </td>
