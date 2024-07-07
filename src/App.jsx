@@ -13,6 +13,7 @@ import SuccessModal from './utilities/SuccessModal';
 import FailureModal from './utilities/FailureModal';
 import ProgramsTable from './components/main/benefits/ProgramsTable';
 import { useSelector } from 'react-redux';
+import WhatBenefits from './components/main/benefits/WhatBenefits';
 
 const App = () => {
   const loading=useSelector((state)=> state.referral.loading);
@@ -26,11 +27,11 @@ const App = () => {
         <Navbar />
       </header>
 
-
       <main className="mt-[179px]">
         <Tabs />
         <PeopleWithMobile/>
         <HowDoIRefer />
+        <WhatBenefits />
         <ProgramsTable />
         <FAQ />
         <GetInTouch />
@@ -40,12 +41,10 @@ const App = () => {
         {
           loading &&
           <div className="fixed inset-0 z-50 bg-black bg-opacity-15 flex items-center justify-center">
-
             <RingLoader
               color="#36d7b7"
               size={150}
             />
-
           </div>
         }
       </main>
