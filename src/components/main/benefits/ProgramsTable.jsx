@@ -70,7 +70,7 @@ const ProgramsTable = () => {
           </table>
         </div>
       </div>
-      <div className='flex items-center justify-center my-16'>
+      <div className='flex items-center justify-center mt-16'>
         <ReferBtn />
       </div>
     </div>

@@ -18,43 +18,40 @@ const FAQ = () => {
       }
     ],
     'How To Use?': [
-      // Add questions and answers for 'How To Use?' tab
     ],
     'Terms & Conditions': [
-      // Add questions and answers for 'Terms & Conditions' tab
     ]
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-10 p-4 border border-blue-400 rounded-lg">
-      <h2 className="text-2xl font-bold text-center mb-6">
-        Frequently Asked <span className="text-blue-600">Questions</span>
-      </h2>
-      <div className="flex">
-        <div className="w-1/4">
+    <div className="w-full mx-auto mt-10 p-4  rounded-lg">
+  
+      <h2 className="mt-16 p-4 lg:p-6 lg:pb-8 relative z-20 text-center text-[21px]/[40px] lg:text-[35px]/[50px] 2xl:text-[40px]/[60px] 3xl:text-[44px]/[65px] font-semibold">Frequently Asked <span className="text-[#1A73E8] font-bold">Questions</span></h2>
+      <div className="flex gap-4 lg:w-[981px] xl:w-[1081px] 2xl:w-[1181px] 3xl:w-[1281px] mx-auto">
+        <div className="w-1/6">
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`block w-full py-2 px-4 mb-2 text-left rounded-lg ${activeTab === tab ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-700'}`}
+              className={`block w-full py-2 px-4 mb-2 font-semibold text-center rounded-lg z-10  ${activeTab === tab ? 'shadow-custom-medium text-[#1A73E8]' : ' text-[#737373] border-[1.5px] border-[#737373]'}`}
             >
               {tab}
             </button>
           ))}
         </div>
-        <div className="w-3/4 pl-6">
+        <div className="w-5/6 pl-6">
           {faqData[activeTab].map((item, index) => (
             <div key={index} className="mb-4">
               <button
                 onClick={() => setActiveQuestion(activeQuestion === index ? null : index)}
-                className="text-left w-full focus:outline-none text-blue-600"
+                className={`text-left w-full focus:outline-none ${activeQuestion === index? "text-[#1A73E8]": "text-[rgba(0, 0, 0, 0.87)]"}`}
               >
-                <h3 className="text-lg">
+                <h3 className="text-[17px]/[28px] font-semibold">
                   {item.question}
                   <span className="float-right">{activeQuestion === index ? '▲' : '▼'}</span>
                 </h3>
               </button>
-              {activeQuestion === index && <p className="mt-2 text-gray-700">{item.answer}</p>}
+              {activeQuestion === index && <p className="mt-2 text-gray-700 ml-2">{item.answer}</p>}
             </div>
           ))}
         </div>

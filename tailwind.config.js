@@ -17,6 +17,7 @@ export default {
     extend: {
       boxShadow: {
         'custom-dark': '0px 4px 33px 1px #00072B36',
+        'custom-medium': '0px 0px 7px 1px #00072B36',
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
