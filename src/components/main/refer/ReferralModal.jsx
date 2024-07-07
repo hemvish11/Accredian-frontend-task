@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsFailure, setIsSuccessfull, setLoading, submitReferral, updateFormData } from '../../../features/referralSlice';
+import { resetFormData, setIsFailure, setIsSuccessfull, setLoading, submitReferral, updateFormData } from '../../../features/referralSlice';
 import { setIsReferralBoxOpened } from '../../../features/referralBoxSlice';
 
 const ReferralModal = () => {
@@ -24,6 +24,7 @@ const ReferralModal = () => {
       .unwrap()
       .then(() => {
         dispatch(setIsSuccessfull(true));
+        dispatch(resetFormData());
       })
       .catch(() => {
         dispatch(setIsFailure(true));
