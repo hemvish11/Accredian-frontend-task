@@ -12,16 +12,13 @@ import Footer from './components/footer/Footer';
 import SuccessModal from './utilities/SuccessModal';
 import FailureModal from './utilities/FailureModal';
 import ProgramsTable from './components/main/benefits/ProgramsTable';
+import { useSelector } from 'react-redux';
 
 const App = () => {
-  const [referBoxOpened, setReferBoxOpened] = useState(false);
-  const [isSuccessfull, setIsSuccessfull] = useState(false);
-  const [isFailure, setIsFailure] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const loading=useSelector((state)=> state.referral.loading);
+  const isSuccessfull = useSelector((state) => state.referral.isSuccessfull);
+  const isFailure = useSelector((state) => state.referral.isFailure);
 
-  const closeReferBox = () => {
-    setReferBoxOpened(false);
-  }
   return (
     <>
       <header className="w-full bg-white shadow">
@@ -32,20 +29,14 @@ const App = () => {
 
       <main className="mt-[179px]">
         <Tabs />
-        <PeopleWithMobile referBoxOpened={referBoxOpened} setReferBoxOpened={setReferBoxOpened} />
-        <HowDoIRefer referBoxOpened={referBoxOpened} setReferBoxOpened={setReferBoxOpened} />
+        <PeopleWithMobile/>
+        <HowDoIRefer />
         <ProgramsTable />
         <FAQ />
         <GetInTouch />
-        <ReferralModal
-          isOpen={referBoxOpened}
-          onClose={closeReferBox}
-          setIsSuccessfull={setIsSuccessfull}
-          setIsFailure={setIsFailure}
-          setLoading={setLoading}
-        />
-        {isSuccessfull && <SuccessModal isOpen={isSuccessfull} setIsSuccessfull={setIsSuccessfull} />}
-        {isFailure && <FailureModal isOpen={isFailure} setIsFailure={setIsFailure} />}
+        <ReferralModal />
+        {isSuccessfull && <SuccessModal/>}
+        {isFailure && <FailureModal />}
         {
           loading &&
           <div className="fixed inset-0 z-50 bg-black bg-opacity-15 flex items-center justify-center">

@@ -1,4 +1,3 @@
-// src/features/referral/referralSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -19,7 +18,8 @@ export const submitReferral = createAsyncThunk(
   'referral/submitReferral',
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await fetch("https://accredian-backend-task-380t.onrender.com/api/addReferralDetails", {
+      // const response = await fetch("http://localhost:3000/api/addReferralDetails", {
+      const response = await fetch(import.meta.env.VITE_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,5 +77,4 @@ const referralSlice = createSlice({
 });
 
 export const { updateFormData, resetFormData, setIsSuccessfull, setIsFailure, setLoading } = referralSlice.actions;
-
 export default referralSlice.reducer;

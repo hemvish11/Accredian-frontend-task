@@ -1,7 +1,16 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsFailure } from '../features/referralSlice';
 
-const FailureModal = ({ isOpen, setIsFailure }) => {
-  if (!isOpen) return null;
+const FailureModal = () => {
+  const isFailure = useSelector((state)=> state.referral.isFailure);
+  if (!isFailure) return null;
+
+  const dispatch=useDispatch();
+  
+  const handleClose=()=>{
+    dispatch(setIsFailure(false));
+  }
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
@@ -10,7 +19,7 @@ const FailureModal = ({ isOpen, setIsFailure }) => {
         <p className="mb-4">Something went wrong with your referral. Please try again.</p>
         <button
           className="bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={(e)=>setIsFailure(false)}
+          onClick={()=>handleClose()}
         >
           Close
         </button>

@@ -1,7 +1,16 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsSuccessfull } from '../features/referralSlice';
 
-const SuccessModal = ({ isOpen, setIsSuccessfull }) => {
-  if (!isOpen) return null;
+const SuccessModal = () => {
+  const isSuccessfull = useSelector((state)=> state.referral.isSuccessfull);
+  if (!isSuccessfull) return null;
+
+  const dispatch=useDispatch();
+
+  const handleClose=()=>{
+    dispatch(setIsSuccessfull(false));
+  }
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
@@ -10,7 +19,7 @@ const SuccessModal = ({ isOpen, setIsSuccessfull }) => {
         <p className="mb-4">Your referral was successful. Thank you!</p>
         <button
           className="bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={(e)=>setIsSuccessfull(false)}
+          onClick={()=>handleClose()}
         >
           Close
         </button>

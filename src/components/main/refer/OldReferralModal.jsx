@@ -1,39 +1,56 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setIsFailure, setIsSuccessfull, setLoading, submitReferral, updateFormData } from '../../../features/referralSlice';
-import { setIsReferralBoxOpened } from '../../../features/referralBoxSlice';
 
-const ReferralModal = () => {
+const ReferralModal = ({ isOpen, onClose, setIsSuccessfull, setIsFailure, setLoading }) => {
+  const initialData = {
+    refereeName: "",
+    refereeEmail: "",
+    refereePhoneNumber: "",
+    friendName: "",
+    friendEmail: "",
+    friendPhoneNumber: "",
+  }
 
-  const dispatch = useDispatch();
-  const formData = useSelector((state) => state.referral.formData);
-  const loading = useSelector((state) => state.referral.loading);
-  const isReferralBoxOpened = useSelector((state) => state.box.isReferralBoxOpened);
-  
-  const updateData = (e) => {
+  const [formData, setFormData] = useState(initialData);
+
+  const updateFormData = (e) => {
     const { name, value } = e.target;
-    dispatch(updateFormData({ name, value }));
+    setFormData(prevData => ({ ...prevData, [name]: value }));
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(setLoading(true));
-    dispatch(setIsReferralBoxOpened(false));
+    // console.log(formData);
+    setLoading(true);
+    onClose();
 
-    dispatch(submitReferral(formData))
-      .unwrap()
-      .then(() => {
-        dispatch(setIsSuccessfull(true));
+    try {
+      // const response = await fetch("http://localhost:3000/api/addReferralDetails", {
+        const response = await fetch("https://accredian-backend-task-380t.onrender.com/api/addReferralDetails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData)
       })
-      .catch(() => {
-        dispatch(setIsFailure(true));
-      })
-      .finally(() => {
-        dispatch(setLoading(false));
-      })
+
+      if (response.ok) {
+        const jsonData = await response.json();
+        console.log("Data posted successfully", jsonData);
+        if (jsonData.err) {
+          console.log("Error posting the data", error);
+          setIsFailure(true);
+        }
+        setIsSuccessfull(true);
+      }
+    } catch (error) {
+      console.log("Error posting the data", error);
+      setIsFailure(true);
+    }
+    // setFormData(initialData);
+    setLoading(false);
   };
 
-  if (!isReferralBoxOpened) return null;
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
@@ -47,7 +64,7 @@ const ReferralModal = () => {
               className="w-full p-2 border rounded"
               name='refereeName'
               value={formData.refereeName}
-              onChange={(e) => updateData(e)}
+              onChange={(e) => updateFormData(e)}
               required
             />
           </div>
@@ -58,7 +75,7 @@ const ReferralModal = () => {
               className="w-full p-2 border rounded"
               value={formData.refereeEmail}
               name='refereeEmail'
-              onChange={(e) => updateData(e)}
+              onChange={(e) => updateFormData(e)}
               required
             />
           </div>
@@ -69,7 +86,7 @@ const ReferralModal = () => {
               type="number"
               className="w-full p-2 border rounded"
               value={formData.refereePhoneNumber}
-              onChange={(e) => updateData(e)}
+              onChange={(e) => updateFormData(e)}
               required
             />
           </div>
@@ -81,7 +98,7 @@ const ReferralModal = () => {
               type="text"
               className="w-full p-2 border rounded"
               value={formData.friendName}
-              onChange={(e) => updateData(e)}
+              onChange={(e) => updateFormData(e)}
               required
             />
           </div>
@@ -92,7 +109,7 @@ const ReferralModal = () => {
               type="email"
               className="w-full p-2 border rounded"
               value={formData.friendEmail}
-              onChange={(e) => updateData(e)}
+              onChange={(e) => updateFormData(e)}
               required
             />
           </div>
@@ -103,7 +120,7 @@ const ReferralModal = () => {
               type="number"
               className="w-full p-2 border rounded"
               value={formData.friendPhoneNumber}
-              onChange={(e) => updateData(e)}
+              onChange={(e) => updateFormData(e)}
               required
             />
           </div>
@@ -111,7 +128,7 @@ const ReferralModal = () => {
             <button
               type="button"
               className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
-              onClick={()=> dispatch(setIsReferralBoxOpened(false))}
+              onClick={onClose}
             >
               Cancel
             </button>
